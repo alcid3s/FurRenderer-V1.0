@@ -16,9 +16,15 @@ void main()
     float threshold = 1.0 / 45.0;
 
     float currentThreshold = threshold * layerNumber;
+
+    float drawValue = layerNumber;
+
+    if(layerNumber < 15) {
+        drawValue = 15;
+    }
     
     if(tex.r > currentThreshold) {
-        fragColor.rgb = vec3(160.0 / 255, 82.0 / 255,45.0 / 255) * (layerNumber / 45.0);
+        fragColor.rgb = vec3(160.0 / 255, 82.0 / 255,45.0 / 255) * ((drawValue)/ 45.0);
         fragColor.a = 1;
     } else {
         discard;

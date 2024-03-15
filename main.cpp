@@ -12,6 +12,8 @@
 #include "ObjModel.h"
 
 std::vector<Shader*> shaders;
+
+Shader* defaultDraw;
 std::vector<ObjModel*> models;
 std::vector<float> distances;
 
@@ -68,14 +70,17 @@ void init()
 	shaders.push_back(new Shader("assets/shaders/fur"));
 	shaders.push_back(new Shader("assets/shaders/simple"));
 	shaders.push_back(new Shader("assets/shaders/johanLava"));
+	defaultDraw = new Shader("assets/shaders/defaultDraw");
 
 	models.push_back(new ObjModel("assets/models/sphere3/sphere3.obj"));
 	distances.push_back(.5);
+	models.push_back(new ObjModel("assets/models/rabbit/rabbit.obj"));
+	distances.push_back(10);
 	models.push_back(new ObjModel("assets/models/sphere/sphere.obj"));
 	distances.push_back(2);
 	models.push_back(new ObjModel("assets/models/plane/plane.obj"));
 	distances.push_back(2);
-	models.push_back(new ObjModel("assets/models/alpaca/alpaca.obj"));
+	models.push_back(new ObjModel("assets/models/alpaca/alpaca2.obj"));
 	distances.push_back(10);
 	
 
@@ -100,7 +105,6 @@ void display()
 	glViewport(0, 0, screenSize.x, screenSize.y);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
 	Shader* shader = shaders[currentShader];
 
 	glm::mat4 projection = glm::perspective(glm::radians(70.0f), screenSize.x / (float)screenSize.y, 0.01f, 200.0f);		//begin met een perspective matrix
@@ -121,6 +125,13 @@ void display()
 
 	models[activeModel]->draw();
 
+	//defaultDraw->use();
+	//glUniformMatrix4fv(defaultDraw->getUniform("modelMatrix"), 1, 0, glm::value_ptr(model));								//en zet de matrix in opengl
+	//glUniformMatrix4fv(defaultDraw->getUniform("viewMatrix"), 1, 0, glm::value_ptr(view));								//en zet de matrix in opengl
+	//glUniformMatrix4fv(defaultDraw->getUniform("projectionMatrix"), 1, 0, glm::value_ptr(projection));								//en zet de matrix in opengl
+	//glUniform1i(defaultDraw->getUniform("s_texture"), 0);
+
+	//models[activeModel]->draw();
 	//en tekenen :)
 
 	glfwSwapBuffers(window);
